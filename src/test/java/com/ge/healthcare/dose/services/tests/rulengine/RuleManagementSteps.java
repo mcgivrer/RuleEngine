@@ -3,6 +3,7 @@ package com.ge.healthcare.dose.services.tests.rulengine;
 import com.ge.healthcare.dose.services.ruleengine.*;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +30,14 @@ public class RuleManagementSteps implements En {
     private MyRule r;
     private JsonObject jsonObject;
 
+    private JsonDataOutputWriter jsonDataOutPutWriter;
+
+
+    static private int index=0;
+
     public RuleManagementSteps() {
+
+        jsonDataOutPutWriter = new JsonDataOutputWriter();
 
 
         Given("^the RuleProcessor instance is up and running$", () -> {
@@ -78,21 +86,30 @@ public class RuleManagementSteps implements En {
         });
 
         And("^I create a new JsonObject with \"([^\"]*)\"$", (String jsonValue) -> {
-            jsonObject = new JsonParser().parse(jsonValue).getAsJsonObject();
-            objects.put(jsonObject.get("name").getAsString(), jsonObject);
+            JsonObject obj = new JsonParser().parse(jsonValue).getAsJsonObject();
+            jsonObject = obj;
+            objects.put(obj.get("name").getAsString(), obj);
         });
 
-        Then("^I process the JsonObject named \"([^\"]*)\" with the RuleProcessor with RuleSet name is \"([^\"]*)\"$", (String jsonObjectName, String ruleSetName) -> {
+        Then("^I process the JsonObject with the RuleProcessor with RuleSet name is \"([^\"]*)\"$", (String ruleSetName) -> {
+            rp.setDataWriter(jsonDataOutPutWriter);
             rp.process(ruleSetName, objects.values());
+            rp.run();
         });
 
-        And("^The JsonObject named \"([^\"]*)\" is processed and the status is \"([^\"]*)\"$", (String jsonObjectName, String requestStatus) -> {
-            jsonObject = objects.get(jsonObjectName);
-            String status = jsonObject.get("status").getAsString();
-            assertEquals(String.format("The jsonObject %s has not been processed", jsonObjectName), requestStatus, status);
+        And("^The JsonObject identified by \"([^\"]*)\" is processed and the \"([^\"]*)\" is \"([^\"]*)\"$", (String jsonObjectId, String attributeName, String requestStatus) -> {
+           // waitFor(500);
+            jsonObject = jsonDataOutPutWriter.getData(Integer.parseInt(jsonObjectId));
+            String status = jsonObject.get(attributeName).getAsString();
+            assertEquals(String.format("The jsonObject %s has not been processed; [%s] is [%s]", jsonObjectId,attributeName,status), requestStatus, status);
         });
 
-
+        And("^The JsonObject identified by \"([^\"]*)\" has been processed by RuleEngine and the \"([^\"]*)\" is \"([^\"]*)\"$", (String jsonObjectId, String attributeName, String requestStatus) -> {
+          //  waitFor(500);
+            jsonObject = (JsonObject) re.getDataWriter().getData(Integer.parseInt(jsonObjectId));
+            String status = jsonObject.get(attributeName).getAsString();
+            assertEquals(String.format("The jsonObject %s has not been processed; [%s] is [%s]", jsonObjectId,attributeName,status), requestStatus, status);
+        });
         And("^I remove a Rule named \"([^\"]*)\"$", (String ruleName) -> {
             rs.remove(ruleName);
         });
@@ -128,11 +145,10 @@ public class RuleManagementSteps implements En {
             assertTrue("The UnknownRuleSetException has not been raised", unknownRuleSetExceptionRaised);
         });
 
-        /*------< TODO : implement other remove oriented tests >------------------------------------------------------*/
-
         Given("^the RuleEngine is up and running with maxPoolSize=\"([^\"]*)\"$", (String maxPoolSize) -> {
             int iMaxPoolSize = Integer.parseInt(maxPoolSize);
             re = new RuleEngine(iMaxPoolSize);
+            re.setOutputDataWrite(jsonDataOutPutWriter);
         });
         And("^I create a new RuleProcessor$", () -> {
             rp = new RuleProcessor();
@@ -149,11 +165,23 @@ public class RuleManagementSteps implements En {
             try {
                 rp.process("test", objects.values());
                 re.addRuleProcessor(rp);
-                Thread.sleep(2000);
+                Thread.sleep(250);
             } catch (NoMoreExecutorPoolSlotException | InterruptedException e) {
                 e.printStackTrace();
             }
         });
+        And("^I add MySecondRule to the RuleSet \"([^\"]*)\"$", (String ruleSetName) -> {
+            MySecondRule r = new MySecondRule("rule-test2");
+            rs.add(r);
+        });
 
+    }
+
+    private void waitFor(int delay) {
+        try{
+            Thread.sleep(delay);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

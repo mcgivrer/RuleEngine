@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite failures="1" name="cucumber.runtime.formatter.JUnitFormatter" skipped="1" tests="8" time="0.15939">
+<testcase classname="RuleProcessor Manage Rules" name="Add a Rule to the RuleProcessor" time="0.118867">
+<system-out><![CDATA[Given the RuleProcessor instance is up and running..........................passed
+And I add a new Rule........................................................passed
+Then the New Rule is listed in RuleProcessor rules list.....................passed
+]]></system-out>
+</testcase>
+<testcase classname="RuleProcessor Manage Rules" name="Retrieve a non existing Rule from the RuleProcessor" time="0.000342">
+<system-out><![CDATA[Given the RuleProcessor instance is up and running..........................passed
+And I try to get an unknown Role............................................passed
+Then the UnknownRuleException is raised.....................................passed
+]]></system-out>
+</testcase>
+<testcase classname="RuleProcessor Manage Rules" name="Remove a Rule" time="0.003045">
+<system-out><![CDATA[Given the RuleProcessor instance is up and running..........................passed
+And I remove a Rule named "test-rule".......................................passed
+Then the "test-rule" Rule does not exists anymore...........................passed
+]]></system-out>
+</testcase>
+<testcase classname="RuleProcessor Manage RuleSets" name="Add a RuleSet" time="0.000137">
+<system-out><![CDATA[Given the RuleProcessor instance is up and running..........................passed
+And I add a new RuleSet.....................................................passed
+Then the New RuleSet is listed in RuleProcessor ruleSet list................passed
+]]></system-out>
+</testcase>
+<testcase classname="RuleProcessor Manage RuleSets" name="Retrieve a non existing RuleSet from the RuleProcessor" time="0.002296">
+<system-out><![CDATA[Given the RuleProcessor instance is up and running..........................passed
+And I try to get an "unknown" RuleSet.......................................passed
+Then the UnknownRuleSetException is raised..................................passed
+]]></system-out>
+</testcase>
+<testcase classname="RuleProcessor Manage RuleSets" name="Remove a RuleSet" time="0.000338">
+<system-out><![CDATA[Given the RuleProcessor instance is up and running..........................passed
+And I remove a RuleSet named "test-ruleset".................................passed
+Then the set of Rules "test-ruleset" does not exists anymore................passed
+]]></system-out>
+</testcase>
+<testcase classname="Feed the RuleEngine" name="Add a RuleProcessor" time="0.033103">
+<skipped><![CDATA[Given the RuleEngine is up and running with maxPoolSize="1".................passed
+And I create a new RuleProcessor............................................passed
+And I add a RuleSet named "test"............................................passed
+And I add MyRule to the RuleSet "test"......................................passed
+And I create a new JsonObject with "{'name':'myObject','age':25, 'weight':78,'height':170,'date':'2018-09-13 12:00:00.00T000','status':'unknown'}".passed
+And Submit the RuleProcessor to the RuleEngine..............................passed
+Then The JsonObject named "myObject" is processed and the status is "done"..undefined
+]]></skipped>
+</testcase>
+<testcase classname="RuleEngine processing" name="Create and feed an object to RuleEngine" time="0.001262">
+<failure message="org.junit.ComparisonFailure: The jsonObject myObject has not been processed expected:&lt;[done]&gt; but was:&lt;[unknown]&gt;&#13;&#10;&#9;at org.junit.Assert.assertEquals(Assert.java:115)&#13;&#10;&#9;at com.ge.healthcare.dose.services.tests.rulengine.RuleManagementSteps.lambda$new$9(RuleManagementSteps.java:92)&#13;&#10;&#9;at ✽.And the JsonObject named &quot;myObject&quot; is processed and the status is &quot;done&quot;(ruleprocessor-process.feature:11)&#13;&#10;"><![CDATA[Given the RuleProcessor instance is up and running..........................passed
+And I add a new RuleSet.....................................................passed
+And I add a new Rule........................................................passed
+And I create a new JsonObject with "{'name':'myObject','age':25, 'weight':78,'height':170,'date':'2018-09-13 12:00:00.00T000','status':'unknown'}".passed
+Then I process the JsonObject named "myObject" with the RuleProcessor.......passed
+And the JsonObject named "myObject" is processed and the status is "done"...failed
+
+StackTrace:
+org.junit.ComparisonFailure: The jsonObject myObject has not been processed expected:<[done]> but was:<[unknown]>
+	at org.junit.Assert.assertEquals(Assert.java:115)
+	at com.ge.healthcare.dose.services.tests.rulengine.RuleManagementSteps.lambda$new$9(RuleManagementSteps.java:92)
+	at ✽.And the JsonObject named "myObject" is processed and the status is "done"(ruleprocessor-process.feature:11)
+]]></failure>
+</testcase>
+</testsuite>

@@ -2,6 +2,8 @@ package com.ge.healthcare.dose.services.ruleengine;
 
 import com.google.gson.JsonObject;
 
+import java.util.List;
+
 /**
  * The Rule interface is the basic entity description to be managed by all the RuleProcessor process.
  * <p></p>It provides 2 main methods signatures :
@@ -32,5 +34,6 @@ public interface Rule extends Runnable {
      * @param obj the object to be processed.
      * @return an int value corresponding to an error code. 0 is OK, any other error will be evaluate as an error code.
      */
-    int process(RuleContext rc, JsonObject obj);
+    JsonObject process(RuleContext rc, JsonObject obj);
+
 }

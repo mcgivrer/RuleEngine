@@ -1,0 +1,64 @@
+Feature: RuleProcessor Manage Rules
+  
+  Add or manage Rule into the RuleProcessor.
+
+  Scenario: Add a Rule to the RuleProcessor                 [90m# ruleengine-rulemanagement.feature:5[0m
+    [32mGiven [0m[32mthe RuleProcessor instance is up and running[0m      [90m# RuleManagementSteps.java:35[0m
+    [32mAnd [0m[32mI add a new Rule[0m                                    [90m# RuleManagementSteps.java:44[0m
+    [32mThen [0m[32mthe New Rule is listed in RuleProcessor rules list[0m [90m# RuleManagementSteps.java:50[0m
+
+  Scenario: Retrieve a non existing Rule from the RuleProcessor [90m# ruleengine-rulemanagement.feature:10[0m
+    [32mGiven [0m[32mthe RuleProcessor instance is up and running[0m          [90m# RuleManagementSteps.java:35[0m
+    [32mAnd [0m[32mI try to get an unknown Role[0m                            [90m# RuleManagementSteps.java:68[0m
+    [32mThen [0m[32mthe UnknownRuleException is raised[0m                     [90m# RuleManagementSteps.java:72[0m
+
+  Scenario: Remove a Rule                              [90m# ruleengine-rulemanagement.feature:15[0m
+    [32mGiven [0m[32mthe RuleProcessor instance is up and running[0m [90m# RuleManagementSteps.java:35[0m
+    [32mAnd [0m[32mI remove a Rule named "[0m[32m[1mtest-rule[0m[32m"[0m              [90m# RuleManagementSteps.java:96[0m
+    [32mThen [0m[32mthe "[0m[32m[1mtest-rule[0m[32m" Rule does not exists anymore[0m  [90m# RuleManagementSteps.java:100[0m
+Feature: RuleProcessor Manage RuleSets
+  
+  Add or manage RuleSet into the RuleProcessor.
+
+  Scenario: Add a RuleSet                                        [90m# ruleengine-ruleset-mgt.feature:6[0m
+    [32mGiven [0m[32mthe RuleProcessor instance is up and running[0m           [90m# RuleManagementSteps.java:35[0m
+    [32mAnd [0m[32mI add a new RuleSet[0m                                      [90m# RuleManagementSteps.java:59[0m
+    [32mThen [0m[32mthe New RuleSet is listed in RuleProcessor ruleSet list[0m [90m# RuleManagementSteps.java:64[0m
+
+  Scenario: Retrieve a non existing RuleSet from the RuleProcessor [90m# ruleengine-ruleset-mgt.feature:11[0m
+    [32mGiven [0m[32mthe RuleProcessor instance is up and running[0m             [90m# RuleManagementSteps.java:35[0m
+    [32mAnd [0m[32mI try to get an "[0m[32m[1munknown[0m[32m" RuleSet[0m                          [90m# RuleManagementSteps.java:120[0m
+    [32mThen [0m[32mthe UnknownRuleSetException is raised[0m                     [90m# RuleManagementSteps.java:127[0m
+
+  Scenario: Remove a RuleSet                                     [90m# ruleengine-ruleset-mgt.feature:16[0m
+    [32mGiven [0m[32mthe RuleProcessor instance is up and running[0m           [90m# RuleManagementSteps.java:35[0m
+    [32mAnd [0m[32mI remove a RuleSet named "[0m[32m[1mtest-ruleset[0m[32m"[0m                  [90m# RuleManagementSteps.java:108[0m
+    [32mThen [0m[32mthe set of Rules "[0m[32m[1mtest-ruleset[0m[32m" does not exists anymore[0m [90m# RuleManagementSteps.java:112[0m
+Feature: Feed the RuleEngine
+  
+  Feed the rule engine by adding RuleProcessor to the system.
+
+  Scenario: Add a RuleProcessor                                                                                                                        [90m# ruleengine-submit.feature:5[0m
+    [32mGiven [0m[32mthe RuleEngine is up and running with maxPoolSize="[0m[32m[1m1[0m[32m"[0m                                                                                        [90m# RuleManagementSteps.java:133[0m
+    [32mAnd [0m[32mI create a new RuleProcessor[0m                                                                                                                   [90m# RuleManagementSteps.java:137[0m
+    [32mAnd [0m[32mI add a RuleSet named "[0m[32m[1mtest[0m[32m"[0m                                                                                                                   [90m# RuleManagementSteps.java:141[0m
+    [32mAnd [0m[32mI add MyRule to the RuleSet "[0m[32m[1mtest[0m[32m"[0m                                                                                                             [90m# RuleManagementSteps.java:144[0m
+    [32mAnd [0m[32mI create a new JsonObject with "[0m[32m[1m{'name':'myObject','age':25, 'weight':78,'height':170,'date':'2018-09-13 12:00:00.00T000','status':'unknown'}[0m[32m"[0m [90m# RuleManagementSteps.java:80[0m
+    [32mAnd [0m[32mSubmit the RuleProcessor to the RuleEngine[0m                                                                                                     [90m# RuleManagementSteps.java:148[0m
+    [33mThen [0m[33mThe JsonObject named "myObject" is processed and the status is "done"[0m
+Feature: RuleEngine processing
+  
+  try and execute processing JsonObject with some rules
+
+  Scenario: Create and feed an object to RuleEngine                                                                                                    [90m# ruleprocessor-process.feature:5[0m
+    [32mGiven [0m[32mthe RuleProcessor instance is up and running[0m                                                                                                 [90m# RuleManagementSteps.java:35[0m
+    [32mAnd [0m[32mI add a new RuleSet[0m                                                                                                                            [90m# RuleManagementSteps.java:59[0m
+    [32mAnd [0m[32mI add a new Rule[0m                                                                                                                               [90m# RuleManagementSteps.java:44[0m
+    [32mAnd [0m[32mI create a new JsonObject with "[0m[32m[1m{'name':'myObject','age':25, 'weight':78,'height':170,'date':'2018-09-13 12:00:00.00T000','status':'unknown'}[0m[32m"[0m [90m# RuleManagementSteps.java:80[0m
+    [32mThen [0m[32mI process the JsonObject named "[0m[32m[1mmyObject[0m[32m" with the RuleProcessor[0m                                                                              [90m# RuleManagementSteps.java:85[0m
+    [31mAnd [0m[31mthe JsonObject named "[0m[31m[1mmyObject[0m[31m" is processed and the status is "[0m[31m[1mdone[0m[31m"[0m                                                                          [90m# RuleManagementSteps.java:90[0m
+      [31morg.junit.ComparisonFailure: The jsonObject myObject has not been processed expected:<[done]> but was:<[unknown]>
+      	at org.junit.Assert.assertEquals(Assert.java:115)
+      	at com.ge.healthcare.dose.services.tests.rulengine.RuleManagementSteps.lambda$new$9(RuleManagementSteps.java:92)
+      	at ✽.And the JsonObject named "myObject" is processed and the status is "done"(ruleprocessor-process.feature:11)
+      [0m

@@ -5,6 +5,7 @@ import com.ge.healthcare.dose.services.ruleengine.Rule;
 import com.ge.healthcare.dose.services.ruleengine.RuleContext;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,8 +15,8 @@ import java.util.List;
  * @see AbstractRule
  * @see Rule
  */
-public class MyRule extends AbstractRule implements Rule {
-    public MyRule(String s) {
+public class MySecondRule extends AbstractRule implements Rule {
+    public MySecondRule(String s) {
         super(s);
     }
 
@@ -32,11 +33,9 @@ public class MyRule extends AbstractRule implements Rule {
     @Override
     public JsonObject process(RuleContext rc, JsonObject obj) {
         float weight = obj.get("weight").getAsFloat();
-        float height = obj.get("height").getAsFloat();
-        float bmi = height / weight;
-        obj.addProperty("bmi", bmi);
-        obj.addProperty("status", "done");
-
+        if (weight < 25) {
+            obj.addProperty("tags", "pediatric");
+        }
         return obj;
     }
 }

@@ -12,7 +12,7 @@ Feature: Feed the RuleEngine
     Then Submit the RuleProcessor to the RuleEngine
     And The JsonObject identified by "1" has been processed by RuleEngine and the "status" is "done"
 
-  Scenario: Add a RuleProcessor with 2 rules and 5 data items
+  Scenario: Add a RuleProcessor with 2 rules
     Given the RuleEngine is up and running with maxPoolSize="2"
     And I create a new RuleProcessor
     And I add a RuleSet named "test-multi-rules"
