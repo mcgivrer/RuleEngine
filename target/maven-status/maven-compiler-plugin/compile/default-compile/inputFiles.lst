@@ -1,9 +1,0 @@
-/home/frederic/projects/prototypes/ruleengine/src/main/java/com/ge/healthcare/dose/services/ruleengine/Rule.java
-/home/frederic/projects/prototypes/ruleengine/src/main/java/com/ge/healthcare/dose/services/ruleengine/RuleProcessor.java
-/home/frederic/projects/prototypes/ruleengine/src/main/java/com/ge/healthcare/dose/services/ruleengine/AbstractRule.java
-/home/frederic/projects/prototypes/ruleengine/src/main/java/com/ge/healthcare/dose/services/ruleengine/RuleContext.java
-/home/frederic/projects/prototypes/ruleengine/src/main/java/com/ge/healthcare/dose/services/ruleengine/UnknownRuleSetException.java
-/home/frederic/projects/prototypes/ruleengine/src/main/java/com/ge/healthcare/dose/services/ruleengine/UnknownRuleException.java
-/home/frederic/projects/prototypes/ruleengine/src/main/java/com/ge/healthcare/dose/services/ruleengine/RuleSet.java
-/home/frederic/projects/prototypes/ruleengine/src/main/java/com/ge/healthcare/dose/services/ruleengine/NoMoreExecutorPoolSlotException.java
-/home/frederic/projects/prototypes/ruleengine/src/main/java/com/ge/healthcare/dose/services/ruleengine/RuleEngine.java
