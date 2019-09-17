@@ -2,7 +2,6 @@ Feature: RuleEngine processing
 
   try and execute processing JsonObject with some rules
 
-  @tag: RuleEngine
   Scenario: Create and feed an object to RuleEngine
     Given the RuleProcessor instance is up and running
     And I add a new RuleSet

@@ -2,7 +2,6 @@ Feature: Feed the RuleEngine
 
   Feed the rule engine by adding RuleProcessor to the system.
 
-  @tag: RuleEngine
   Scenario: Add a RuleProcessor
     Given the RuleEngine is up and running with maxPoolSize="1"
     And I create a new RuleProcessor
