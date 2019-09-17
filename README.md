@@ -10,6 +10,8 @@
 
 This project intends to provide the framework of a RuleEngine with Rule to be processed through a thread pool to distribute tasks.
 
+![figure 1 - The Rule Engine](src/main/site/docs/images/RuleEngine.svg)
+
 ## Compile
 
 To compile the full project, please execute the following command :
