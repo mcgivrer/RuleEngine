@@ -10,7 +10,6 @@
 
 This project intends to provide the framework of a RuleEngine with Rule to be processed through a thread pool to distribute tasks.
 
-
 ## Compile
 
 To compile the full project, please execute the following command :
@@ -46,4 +45,4 @@ Import this project as an Existing Maven Project into your preferred IDE,
 
 ## License
 
-MIT
+[MIT](./LICENSE "Read the MIT license")

@@ -1,0 +1,416 @@
+[
+  {
+    "source": "^I add a new Rule$",
+    "steps": [
+      {
+        "name": "I add a new Rule",
+        "aggregatedDurations": {
+          "average": 0.000081262,
+          "median": 0.000081262
+        },
+        "durations": [
+          {
+            "duration": 0.000131374,
+            "location": "ruleengine-rulemanagement.feature:7"
+          },
+          {
+            "duration": 0.00003115,
+            "location": "ruleprocessor-process.feature:8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^the RuleEngine is up and running with maxPoolSize\u003d\"([^\"]*)\"$",
+    "steps": [
+      {
+        "name": "the RuleEngine is up and running with maxPoolSize\u003d\"1\"",
+        "aggregatedDurations": {
+          "average": 0.402818482,
+          "median": 0.402818482
+        },
+        "durations": [
+          {
+            "duration": 0.402818482,
+            "location": "ruleengine-submit.feature:6"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^the RuleProcessor instance is up and running$",
+    "steps": [
+      {
+        "name": "the RuleProcessor instance is up and running",
+        "aggregatedDurations": {
+          "average": 0.068862954,
+          "median": 0.000041975
+        },
+        "durations": [
+          {
+            "duration": 0.481649003,
+            "location": "ruleengine-rulemanagement.feature:6"
+          },
+          {
+            "duration": 0.000037226,
+            "location": "ruleengine-rulemanagement.feature:11"
+          },
+          {
+            "duration": 0.000041975,
+            "location": "ruleengine-rulemanagement.feature:16"
+          },
+          {
+            "duration": 0.000047493,
+            "location": "ruleengine-ruleset-mgt.feature:7"
+          },
+          {
+            "duration": 0.000041347,
+            "location": "ruleengine-ruleset-mgt.feature:12"
+          },
+          {
+            "duration": 0.000041905,
+            "location": "ruleengine-ruleset-mgt.feature:17"
+          },
+          {
+            "duration": 0.00018173,
+            "location": "ruleprocessor-process.feature:6"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^the New RuleSet is listed in RuleProcessor ruleSet list$",
+    "steps": [
+      {
+        "name": "the New RuleSet is listed in RuleProcessor ruleSet list",
+        "aggregatedDurations": {
+          "average": 0.000070959,
+          "median": 0.000070959
+        },
+        "durations": [
+          {
+            "duration": 0.000070959,
+            "location": "ruleengine-ruleset-mgt.feature:9"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I add a RuleSet named \"([^\"]*)\"$",
+    "steps": [
+      {
+        "name": "I add a RuleSet named \"test\"",
+        "aggregatedDurations": {
+          "average": 0.000138986,
+          "median": 0.000138986
+        },
+        "durations": [
+          {
+            "duration": 0.000138986,
+            "location": "ruleengine-submit.feature:8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^The JsonObject named \"([^\"]*)\" is processed and the status is \"([^\"]*)\"$",
+    "steps": [
+      {
+        "name": "The JsonObject named \"myObject\" is processed and the status is \"done\"",
+        "aggregatedDurations": {
+          "average": 0.014493169,
+          "median": 0.014493169
+        },
+        "durations": [
+          {
+            "duration": 0.014493169,
+            "location": "ruleengine-submit.feature:12"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^the set of Rules \"([^\"]*)\" does not exists anymore$",
+    "steps": [
+      {
+        "name": "the set of Rules \"test-ruleset\" does not exists anymore",
+        "aggregatedDurations": {
+          "average": 0.00918425,
+          "median": 0.00918425
+        },
+        "durations": [
+          {
+            "duration": 0.00918425,
+            "location": "ruleengine-ruleset-mgt.feature:19"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I try to get an unknown Role$",
+    "steps": [
+      {
+        "name": "I try to get an unknown Role",
+        "aggregatedDurations": {
+          "average": 0.000050286,
+          "median": 0.000050286
+        },
+        "durations": [
+          {
+            "duration": 0.000050286,
+            "location": "ruleengine-rulemanagement.feature:12"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^the \"([^\"]*)\" Rule does not exists anymore$",
+    "steps": [
+      {
+        "name": "the \"test-rule\" Rule does not exists anymore",
+        "aggregatedDurations": {
+          "average": 0.00049141,
+          "median": 0.00049141
+        },
+        "durations": [
+          {
+            "duration": 0.00049141,
+            "location": "ruleengine-rulemanagement.feature:18"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^Submit the RuleProcessor to the RuleEngine$",
+    "steps": [
+      {
+        "name": "Submit the RuleProcessor to the RuleEngine",
+        "aggregatedDurations": {
+          "average": 2.018909477,
+          "median": 2.018909477
+        },
+        "durations": [
+          {
+            "duration": 2.018909477,
+            "location": "ruleengine-submit.feature:11"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^the UnknownRuleSetException is raised$",
+    "steps": [
+      {
+        "name": "the UnknownRuleSetException is raised",
+        "aggregatedDurations": {
+          "average": 0.004101972,
+          "median": 0.004101972
+        },
+        "durations": [
+          {
+            "duration": 0.004101972,
+            "location": "ruleengine-ruleset-mgt.feature:14"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I process the JsonObject named \"([^\"]*)\" with the RuleProcessor with RuleSet name is \"([^\"]*)\"$",
+    "steps": [
+      {
+        "name": "I process the JsonObject named \"myObject\" with the RuleProcessor with RuleSet name is \"test\"",
+        "aggregatedDurations": {
+          "average": 0.000139126,
+          "median": 0.000139126
+        },
+        "durations": [
+          {
+            "duration": 0.000139126,
+            "location": "ruleprocessor-process.feature:10"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I remove a RuleSet named \"([^\"]*)\"$",
+    "steps": [
+      {
+        "name": "I remove a RuleSet named \"test-ruleset\"",
+        "aggregatedDurations": {
+          "average": 0.000133818,
+          "median": 0.000133818
+        },
+        "durations": [
+          {
+            "duration": 0.000133818,
+            "location": "ruleengine-ruleset-mgt.feature:18"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I create a new RuleProcessor$",
+    "steps": [
+      {
+        "name": "I create a new RuleProcessor",
+        "aggregatedDurations": {
+          "average": 0.000066071,
+          "median": 0.000066071
+        },
+        "durations": [
+          {
+            "duration": 0.000066071,
+            "location": "ruleengine-submit.feature:7"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^the UnknownRuleException is raised$",
+    "steps": [
+      {
+        "name": "the UnknownRuleException is raised",
+        "aggregatedDurations": {
+          "average": 0.000370094,
+          "median": 0.000370094
+        },
+        "durations": [
+          {
+            "duration": 0.000370094,
+            "location": "ruleengine-rulemanagement.feature:13"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I add MyRule to the RuleSet \"([^\"]*)\"$",
+    "steps": [
+      {
+        "name": "I add MyRule to the RuleSet \"test\"",
+        "aggregatedDurations": {
+          "average": 0.000163012,
+          "median": 0.000163012
+        },
+        "durations": [
+          {
+            "duration": 0.000163012,
+            "location": "ruleengine-submit.feature:9"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I create a new JsonObject with \"([^\"]*)\"$",
+    "steps": [
+      {
+        "name": "I create a new JsonObject with \"{\u0027name\u0027:\u0027myObject\u0027,\u0027age\u0027:25, \u0027weight\u0027:78,\u0027height\u0027:170,\u0027date\u0027:\u00272018-09-13 12:00:00.00T000\u0027,\u0027status\u0027:\u0027unknown\u0027}\"",
+        "aggregatedDurations": {
+          "average": 0.019447808,
+          "median": 0.019447808
+        },
+        "durations": [
+          {
+            "duration": 0.038628749,
+            "location": "ruleengine-submit.feature:10"
+          },
+          {
+            "duration": 0.000266867,
+            "location": "ruleprocessor-process.feature:9"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^the New Rule is listed in RuleProcessor rules list$",
+    "steps": [
+      {
+        "name": "the New Rule is listed in RuleProcessor rules list",
+        "aggregatedDurations": {
+          "average": 0.001932673,
+          "median": 0.001932673
+        },
+        "durations": [
+          {
+            "duration": 0.001932673,
+            "location": "ruleengine-rulemanagement.feature:8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I remove a Rule named \"([^\"]*)\"$",
+    "steps": [
+      {
+        "name": "I remove a Rule named \"test-rule\"",
+        "aggregatedDurations": {
+          "average": 0.006883298,
+          "median": 0.006883298
+        },
+        "durations": [
+          {
+            "duration": 0.006883298,
+            "location": "ruleengine-rulemanagement.feature:17"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I add a new RuleSet$",
+    "steps": [
+      {
+        "name": "I add a new RuleSet",
+        "aggregatedDurations": {
+          "average": 0.000056328,
+          "median": 0.000056328
+        },
+        "durations": [
+          {
+            "duration": 0.000070611,
+            "location": "ruleengine-ruleset-mgt.feature:8"
+          },
+          {
+            "duration": 0.000042045,
+            "location": "ruleprocessor-process.feature:7"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I try to get an \"([^\"]*)\" RuleSet$",
+    "steps": [
+      {
+        "name": "I try to get an \"unknown\" RuleSet",
+        "aggregatedDurations": {
+          "average": 0.000273083,
+          "median": 0.000273083
+        },
+        "durations": [
+          {
+            "duration": 0.000273083,
+            "location": "ruleengine-ruleset-mgt.feature:13"
+          }
+        ]
+      }
+    ]
+  }
+]
