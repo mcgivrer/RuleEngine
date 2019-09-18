@@ -118,9 +118,9 @@ public class RuleProcessor implements Runnable {
      */
     @Override
     public void run() {
-        for (JsonObject object : objects)
-            if (rulesSet.containsKey(this.ruleSetName)) {
-                log.debug("Using RuleSetRule {}", this.ruleSetName);
+        if (rulesSet.containsKey(this.ruleSetName)) {
+            log.debug("Using RuleSetRule {}", this.ruleSetName);
+            for (JsonObject object : objects)
                 for (Map.Entry<String, Rule> ruleEntry : rulesSet.get(this.ruleSetName).entrySet()) {
                     Rule rule = ruleEntry.getValue();
                     if (rule.evaluate(ruleContext, object)) {
@@ -129,7 +129,7 @@ public class RuleProcessor implements Runnable {
                         log.debug("Evaluate Rule {} for {}", ruleEntry.getKey(), object.toString());
                     }
                 }
-            }
+        }
     }
 
     /**

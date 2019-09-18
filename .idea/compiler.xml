@@ -9,8 +9,5 @@
         <module name="rule-engine" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="rule-engine" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

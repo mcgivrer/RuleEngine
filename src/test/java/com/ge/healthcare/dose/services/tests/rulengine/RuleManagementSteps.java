@@ -3,7 +3,6 @@ package com.ge.healthcare.dose.services.tests.rulengine;
 import com.ge.healthcare.dose.services.ruleengine.*;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 @Slf4j
 public class RuleManagementSteps implements En {
 
-    Map<String, JsonObject> objects = new HashMap<>();
+    Map<Integer, JsonObject> objects = new HashMap<>();
     private boolean unknownRuleSetExceptionRaised;
     private RuleEngine re;
     private RuleProcessor rp;
@@ -88,7 +87,7 @@ public class RuleManagementSteps implements En {
         And("^I create a new JsonObject with \"([^\"]*)\"$", (String jsonValue) -> {
             JsonObject obj = new JsonParser().parse(jsonValue).getAsJsonObject();
             jsonObject = obj;
-            objects.put(obj.get("name").getAsString(), obj);
+            objects.put(obj.get("id").getAsInt(), obj);
         });
 
         Then("^I process the JsonObject with the RuleProcessor with RuleSet name is \"([^\"]*)\"$", (String ruleSetName) -> {
@@ -99,14 +98,17 @@ public class RuleManagementSteps implements En {
 
         And("^The JsonObject identified by \"([^\"]*)\" is processed and the \"([^\"]*)\" is \"([^\"]*)\"$", (String jsonObjectId, String attributeName, String requestStatus) -> {
            // waitFor(500);
-            jsonObject = jsonDataOutPutWriter.getData(Integer.parseInt(jsonObjectId));
+            int iJsonObjectId = Integer.parseInt(jsonObjectId);
+            JsonObject jsonObject = jsonDataOutPutWriter.getData(iJsonObjectId);
             String status = jsonObject.get(attributeName).getAsString();
             assertEquals(String.format("The jsonObject %s has not been processed; [%s] is [%s]", jsonObjectId,attributeName,status), requestStatus, status);
         });
 
         And("^The JsonObject identified by \"([^\"]*)\" has been processed by RuleEngine and the \"([^\"]*)\" is \"([^\"]*)\"$", (String jsonObjectId, String attributeName, String requestStatus) -> {
           //  waitFor(500);
-            jsonObject = (JsonObject) re.getDataWriter().getData(Integer.parseInt(jsonObjectId));
+            int iJsonObjectId = Integer.parseInt(jsonObjectId);
+            OutputDataWriter odw = re.getDataWriter();
+            JsonObject jsonObject = (JsonObject) odw.getData(iJsonObjectId);
             String status = jsonObject.get(attributeName).getAsString();
             assertEquals(String.format("The jsonObject %s has not been processed; [%s] is [%s]", jsonObjectId,attributeName,status), requestStatus, status);
         });
@@ -161,9 +163,9 @@ public class RuleManagementSteps implements En {
             MyRule r = new MyRule("test");
             rs.add(r);
         });
-        Then("^Submit the RuleProcessor to the RuleEngine$", () -> {
+        Then("^Submit the RuleProcessor to the RuleEngine with RuleSet \"([^\"]*)\"$", (String ruleSetName) -> {
             try {
-                rp.process("test", objects.values());
+                rp.process(ruleSetName, objects.values());
                 re.addRuleProcessor(rp);
                 Thread.sleep(250);
             } catch (NoMoreExecutorPoolSlotException | InterruptedException e) {

@@ -5,11 +5,9 @@ import com.ge.healthcare.dose.services.ruleengine.Rule;
 import com.ge.healthcare.dose.services.ruleengine.RuleContext;
 import com.google.gson.JsonObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * A test Rule implemented only for test purpose.
+ * This rule detect if patient is pediatric relevant.
  *
  * @author Frédéric Delorme<frederic.delorme@ge.com>
  * @see AbstractRule
@@ -27,15 +25,13 @@ public class MySecondRule extends AbstractRule implements Rule {
 
     @Override
     public boolean evaluate(RuleContext rc, JsonObject obj) {
-        return obj.get("status").getAsString().equals("unknown");
+        float age = obj.get("age").getAsFloat();
+        return age < 18;
     }
 
     @Override
     public JsonObject process(RuleContext rc, JsonObject obj) {
-        float weight = obj.get("weight").getAsFloat();
-        if (weight < 25) {
-            obj.addProperty("tags", "pediatric");
-        }
+        obj.addProperty("tags", "pediatric");
         return obj;
     }
 }
