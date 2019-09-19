@@ -9,8 +9,8 @@ public interface OutputDataWriter {
 
     Object writeData(JsonObject object);
 
-    Object getData();
+    Object getById();
 
-    Object getData(Object idx);
+    Object getById(Object idx);
 
 }

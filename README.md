@@ -21,7 +21,7 @@ $> mvn clean install
 
 ## Execute
 
-to execute the the compiled jar, please execute the command bellow :
+to execute the compiled jar, please execute the command bellow :
 
 ```bash
 $> mvn exec:java

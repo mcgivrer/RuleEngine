@@ -14,7 +14,7 @@ import java.util.List;
  * <p>
  * This Rule is managed by the {@link RuleProcessor#process(String, JsonObject)} method.
  */
-public interface Rule extends Runnable {
+public interface Rule {
     String getName();
 
     /**
