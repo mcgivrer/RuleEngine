@@ -13,7 +13,7 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Cucumber Gherkin Steps for the RuleProcessor.
+ * Cucumber Gherkin Steps implementation for the RuleProcessor tests.
  *
  * @author Frédéric Delorme<frederic.delorme@ge.com>
  */
@@ -99,7 +99,7 @@ public class RuleManagementSteps implements En {
         And("^The JsonObject identified by \"([^\"]*)\" is processed and the \"([^\"]*)\" is \"([^\"]*)\"$", (String jsonObjectId, String attributeName, String requestStatus) -> {
            // waitFor(500);
             int iJsonObjectId = Integer.parseInt(jsonObjectId);
-            JsonObject jsonObject = jsonDataOutPutWriter.getData(iJsonObjectId);
+            JsonObject jsonObject = jsonDataOutPutWriter.getById(iJsonObjectId);
             String status = jsonObject.get(attributeName).getAsString();
             assertEquals(String.format("The jsonObject %s has not been processed; [%s] is [%s]", jsonObjectId,attributeName,status), requestStatus, status);
         });
@@ -108,7 +108,7 @@ public class RuleManagementSteps implements En {
           //  waitFor(500);
             int iJsonObjectId = Integer.parseInt(jsonObjectId);
             OutputDataWriter odw = re.getDataWriter();
-            JsonObject jsonObject = (JsonObject) odw.getData(iJsonObjectId);
+            JsonObject jsonObject = (JsonObject) odw.getById(iJsonObjectId);
             String status = jsonObject.get(attributeName).getAsString();
             assertEquals(String.format("The jsonObject %s has not been processed; [%s] is [%s]", jsonObjectId,attributeName,status), requestStatus, status);
         });

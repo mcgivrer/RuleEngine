@@ -2,6 +2,12 @@ import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 
+/**
+ * TDD entry point for the test execution
+ *
+ * @author Frédéric Delorme
+ * @since 2019
+ */
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = "src/test/resources/features",

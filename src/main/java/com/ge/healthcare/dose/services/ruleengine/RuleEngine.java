@@ -10,12 +10,23 @@ import java.util.concurrent.ThreadPoolExecutor;
  *
  * @author Frédéric Delorme<frederic.delorme@gmail.com>
  */
-public class RuleEngine{
+public class RuleEngine {
 
+    /**
+     * Internal ThreadPool executor to process any Rules on  any data in a distributed and parallel way.
+     */
     private ThreadPoolExecutor pool;
 
+    /**
+     * Data Store manager .
+     */
     private OutputDataWriter dataWriter;
 
+    /**
+     * Create the RuleEngine with a pool of executor size of <code>maxThreadPoolSize</code>.
+     *
+     * @param maxThreadPoolSize the size of the pool executor to process the Rules.
+     */
     public RuleEngine(int maxThreadPoolSize) {
         pool = (ThreadPoolExecutor) Executors.newFixedThreadPool(maxThreadPoolSize);
     }
@@ -35,10 +46,20 @@ public class RuleEngine{
         }
     }
 
+    /**
+     * Define the OutputDataWriter to be used by te RuleEngine instance.
+     *
+     * @param writer
+     */
     public void setOutputDataWrite(OutputDataWriter writer) {
         dataWriter = writer;
     }
 
+    /**
+     * Retrieve the OutputDataWriter for this RuleEngine instance.
+     *
+     * @return
+     */
     public OutputDataWriter getDataWriter() {
         return dataWriter;
     }

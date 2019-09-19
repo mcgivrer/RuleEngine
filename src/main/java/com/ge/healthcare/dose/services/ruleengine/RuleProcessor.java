@@ -114,7 +114,8 @@ public class RuleProcessor implements Runnable {
     }
 
     /**
-     * process the rules from <code>ruleSetName</code> on <code>objects</code>, and store resulting data to <code>odw</code>.
+     * apply rules from <code>ruleSetName</code> on <code>objects</code>, and store resulting data with
+     * the <code>odw</code> implementation.
      */
     @Override
     public void run() {
