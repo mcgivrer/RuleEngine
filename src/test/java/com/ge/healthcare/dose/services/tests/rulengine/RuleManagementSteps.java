@@ -32,7 +32,7 @@ public class RuleManagementSteps implements En {
     private JsonDataOutputWriter jsonDataOutPutWriter;
 
 
-    static private int index=0;
+    static private int index = 0;
 
     public RuleManagementSteps() {
 
@@ -84,7 +84,7 @@ public class RuleManagementSteps implements En {
             }
         });
 
-        And("^I create a new JsonObject with \"([^\"]*)\"$", (String jsonValue) -> {
+        And("^I create a new JsonObject data with \"([^\"]*)\"$", (String jsonValue) -> {
             JsonObject obj = new JsonParser().parse(jsonValue).getAsJsonObject();
             jsonObject = obj;
             objects.put(obj.get("id").getAsInt(), obj);
@@ -97,20 +97,20 @@ public class RuleManagementSteps implements En {
         });
 
         And("^The JsonObject identified by \"([^\"]*)\" is processed and the \"([^\"]*)\" is \"([^\"]*)\"$", (String jsonObjectId, String attributeName, String requestStatus) -> {
-           // waitFor(500);
+            // waitFor(500);
             int iJsonObjectId = Integer.parseInt(jsonObjectId);
             JsonObject jsonObject = jsonDataOutPutWriter.getById(iJsonObjectId);
             String status = jsonObject.get(attributeName).getAsString();
-            assertEquals(String.format("The jsonObject %s has not been processed; [%s] is [%s]", jsonObjectId,attributeName,status), requestStatus, status);
+            assertEquals(String.format("The jsonObject %s has not been processed; [%s] is [%s]", jsonObjectId, attributeName, status), requestStatus, status);
         });
 
         And("^The JsonObject identified by \"([^\"]*)\" has been processed by RuleEngine and the \"([^\"]*)\" is \"([^\"]*)\"$", (String jsonObjectId, String attributeName, String requestStatus) -> {
-          //  waitFor(500);
+            //  waitFor(500);
             int iJsonObjectId = Integer.parseInt(jsonObjectId);
             OutputDataWriter odw = re.getDataWriter();
             JsonObject jsonObject = (JsonObject) odw.getById(iJsonObjectId);
             String status = jsonObject.get(attributeName).getAsString();
-            assertEquals(String.format("The jsonObject %s has not been processed; [%s] is [%s]", jsonObjectId,attributeName,status), requestStatus, status);
+            assertEquals(String.format("The jsonObject %s has not been processed; [%s] is [%s]", jsonObjectId, attributeName, status), requestStatus, status);
         });
         And("^I remove a Rule named \"([^\"]*)\"$", (String ruleName) -> {
             rs.remove(ruleName);
@@ -150,6 +150,7 @@ public class RuleManagementSteps implements En {
         Given("^the RuleEngine is up and running with maxPoolSize=\"([^\"]*)\"$", (String maxPoolSize) -> {
             int iMaxPoolSize = Integer.parseInt(maxPoolSize);
             re = new RuleEngine(iMaxPoolSize);
+            rc = new RuleContext<>();
             re.setOutputDataWrite(jsonDataOutPutWriter);
         });
         And("^I create a new RuleProcessor$", () -> {
@@ -164,23 +165,35 @@ public class RuleManagementSteps implements En {
             rs.add(r);
         });
         Then("^Submit the RuleProcessor to the RuleEngine with RuleSet \"([^\"]*)\"$", (String ruleSetName) -> {
-            try {
-                rp.process(ruleSetName, objects.values());
-                re.addRuleProcessor(rp);
-                Thread.sleep(250);
-            } catch (NoMoreExecutorPoolSlotException | InterruptedException e) {
-                e.printStackTrace();
-            }
+            addProcessorRoRuleEngine(ruleSetName);
         });
         And("^I add MySecondRule to the RuleSet \"([^\"]*)\"$", (String ruleSetName) -> {
             MySecondRule r = new MySecondRule("rule-test2");
             rs.add(r);
         });
+        And("^I add TagWithThresholdOnIntRule to the RuleSet \"([^\"]*)\"$", (String ruleSetname) -> {
+            TagWithThresholdOnIntRule r = new TagWithThresholdOnIntRule("rule-use-context");
+            rs.add(r);
+        });
+        And("^I put \"([^\"]*)\" in the RuleContext \"([^\"]*)\"$", (String jsonValue, String contextKeyName) -> {
+            JsonObject obj = new JsonParser().parse(jsonValue).getAsJsonObject();
+            rc.put(contextKeyName, obj);
+        });
+    }
 
+    private void addProcessorRoRuleEngine(String ruleSetName) {
+        try {
+            rp.setContext(rc);
+            rp.process(ruleSetName, objects.values());
+            re.addRuleProcessor(rp);
+            Thread.sleep(250);
+        } catch (NoMoreExecutorPoolSlotException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private void waitFor(int delay) {
-        try{
+        try {
             Thread.sleep(delay);
         } catch (InterruptedException e) {
             e.printStackTrace();
