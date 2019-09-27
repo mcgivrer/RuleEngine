@@ -1,11 +1,20 @@
 package com.ge.healthcare.dose.services.tests.rulengine;
 
 import com.ge.healthcare.dose.services.ruleengine.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import cucumber.api.java8.En;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +31,7 @@ public class RuleManagementSteps implements En {
 
     Map<Integer, JsonObject> objects = new HashMap<>();
     private boolean unknownRuleSetExceptionRaised;
+    private boolean unknownRuleExcpetionRaised;
     private RuleEngine re;
     private RuleProcessor rp;
     private RuleSet rs;
@@ -39,22 +49,37 @@ public class RuleManagementSteps implements En {
         jsonDataOutPutWriter = new JsonDataOutputWriter();
 
 
-        Given("^the RuleProcessor instance is up and running$", () -> {
-
-            rs = new RuleSet("test");
-            rp = new RuleProcessor(rs);
-            rc = new RuleContext<>();
-            rp.setContext(rc);
-
+        Given("^a RuleProcessor instance is created$", () -> {
+            rp = new RuleProcessor();
         });
 
-        Given("^I add a new Rule$", () -> {
-            r = new MyRule("this-is-my-rule");
+        Given("^the RuleProcessor instance is up and running$", () -> {
+            assertTrue("RuleProcessor's RuleSet is empty", !rp.getRuleSets().isEmpty());
+        });
+
+        And("^the RuleProcessor RuleSet map is not empty$", () -> {
+            assertTrue("RuleProcessor's RuleSet is empty", !rp.getRuleSets().isEmpty());
+        });
+
+        Given("^I add a new Rule named \"([^\"]*)\"$", (String ruleName) -> {
+            r = new MyRule(ruleName);
             rs.add(r);
             rp.add(rs);
         });
 
-        Then("^the New Rule is listed in RuleProcessor rules list$", () -> {
+        Given("^I add a new Rule named \"([^\"]*)\" to RuleSet \"([^\"]*)\"$", (String ruleName, String ruleSetName) -> {
+            try {
+                r = new MyRule(ruleName);
+                RuleSet rs2 = null;
+                rs2 = rp.getRuleSet(ruleSetName);
+                rs2.add(r);
+                rp.add(rs2);
+            } catch (UnknownRuleSetException e) {
+                e.printStackTrace();
+            }
+        });
+
+        Then("^the New Rule \"([^\"]*)\" is listed in RuleProcessor rules list$", (String ruleName) -> {
             try {
                 Rule rf = rp.getRule("test", "this-is-my-rule");
                 assertEquals("the Find rules from RuleProcessor do not correspond to the one added", rf.getName(), r.getName());
@@ -63,25 +88,25 @@ public class RuleManagementSteps implements En {
             }
         });
 
-        And("^I add a new RuleSet$", () -> {
-            RuleSet rs2 = new RuleSet("test2");
+        And("^I add a new RuleSet named \"([^\"]*)\"$", (String ruleSetName) -> {
+            RuleSet rs2 = new RuleSet(ruleSetName);
             rp.add(rs2);
         });
 
-        Then("^the New RuleSet is listed in RuleProcessor ruleSet list$", () -> {
-            RuleSet rs3 = rp.getRuleSets().get("test2");
+        Then("^the New RuleSet \"([^\"]*)\" is listed in RuleProcessor ruleSet list$", (String ruleSetName) -> {
+            RuleSet rs3 = rp.getRuleSets().get(ruleSetName);
             assertEquals("The RuleSet test2 has not been found from RuleProcessor", "test2", rs3.getName());
         });
-        And("^I try to get an unknown Role$", () -> {
-            Rule r2 = new MyRule("notAdded");
+        And("^I try to get an \"([^\"]*)\" Rule from the RuleSet \"([^\"]*)\"$", (String ruleName, String ruleSetName) -> {
+            try {
+                Rule rf = rp.getRule(ruleSetName, ruleName);
+            } catch (UnknownRuleException ure) {
+                unknownRuleExcpetionRaised = true;
+            }
         });
 
         Then("^the UnknownRuleException is raised$", () -> {
-            try {
-                Rule rf = rp.getRule("test", "unknown");
-            } catch (UnknownRuleException ure) {
-                assertEquals("the Rule is unknown, the UnknownRuleException is raised", ure.getMessage(), "Rule test:unknown is unknown");
-            }
+            assertTrue("the Rule is unknown, the UnknownRuleException is raised", unknownRuleExcpetionRaised);
         });
 
         And("^I create a new JsonObject data with \"([^\"]*)\"$", (String jsonValue) -> {
@@ -112,8 +137,14 @@ public class RuleManagementSteps implements En {
             String status = jsonObject.get(attributeName).getAsString();
             assertEquals(String.format("The jsonObject %s has not been processed; [%s] is [%s]", jsonObjectId, attributeName, status), requestStatus, status);
         });
-        And("^I remove a Rule named \"([^\"]*)\"$", (String ruleName) -> {
-            rs.remove(ruleName);
+        And("^I remove a Rule named \"([^\"]*)\" from RuleSet \"([^\"]*)\"$", (String ruleName, String ruleSetName) -> {
+            RuleSet rsItem = null;
+            try {
+                rsItem = rp.getRuleSet(ruleSetName);
+                rsItem.remove(ruleName);
+            } catch (UnknownRuleSetException e) {
+                e.printStackTrace();
+            }
         });
 
         Then("^the \"([^\"]*)\" Rule does not exists anymore$", (String ruleName) -> {
@@ -156,29 +187,63 @@ public class RuleManagementSteps implements En {
         And("^I create a new RuleProcessor$", () -> {
             rp = new RuleProcessor();
         });
+
         And("^I add a RuleSet named \"([^\"]*)\"$", (String ruleSetName) -> {
             rs = new RuleSet(ruleSetName);
             rp.add(rs);
         });
+
         And("^I add MyRule to the RuleSet \"([^\"]*)\"$", (String ruleSetName) -> {
             MyRule r = new MyRule("test");
             rs.add(r);
         });
+
         Then("^Submit the RuleProcessor to the RuleEngine with RuleSet \"([^\"]*)\"$", (String ruleSetName) -> {
             addProcessorRoRuleEngine(ruleSetName);
         });
+
         And("^I add MySecondRule to the RuleSet \"([^\"]*)\"$", (String ruleSetName) -> {
             MySecondRule r = new MySecondRule("rule-test2");
             rs.add(r);
         });
+
         And("^I add TagWithThresholdOnIntRule to the RuleSet \"([^\"]*)\"$", (String ruleSetname) -> {
             TagWithThresholdOnIntRule r = new TagWithThresholdOnIntRule("rule-use-context");
             rs.add(r);
         });
+
         And("^I put \"([^\"]*)\" in the RuleContext \"([^\"]*)\"$", (String jsonValue, String contextKeyName) -> {
             JsonObject obj = new JsonParser().parse(jsonValue).getAsJsonObject();
             rc.put(contextKeyName, obj);
         });
+
+        And("^I declare a RuleContext to the RuleProcessor$", () -> {
+            rc = new RuleContext<>();
+            rp.setContext(rc);
+        });
+
+        And("^I create new JsonObject data from file \"([^\"]*)\"$", this::readDataFromJsonFile);
+
+        And("^The JsonObject identified by \"([^\"]*)\" have been processed by RuleEngine and the \"([^\"]*)\" contains \"([^\"]*)\"$", (String jsonIdList, String attributeName, String attributeValue) -> {
+            compareObjectsAttributeValue(jsonIdList, attributeName, attributeValue);
+        });
+
+
+    }
+
+    private void compareObjectsAttributeValue(String jsonIdList, String attributeName, String attributeValue) {
+        for (String jsonId : jsonIdList.split(",")) {
+            int jId = Integer.parseInt(jsonId);
+            JsonObject o = objects.get(jId);
+            JsonElement eStatus = o.get(attributeName);
+            String status = "unknown-attribute";
+            if (o != null && status != null) {
+                status = eStatus.getAsString();
+            }
+
+            String message = String.format("The Json object with id=%d's attributename '%s' does not contains '%s'", jId, attributeName, attributeValue);
+            Assert.assertTrue(message, status.contains(attributeValue));
+        }
     }
 
     private void addProcessorRoRuleEngine(String ruleSetName) {
@@ -196,6 +261,22 @@ public class RuleManagementSteps implements En {
         try {
             Thread.sleep(delay);
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void readDataFromJsonFile(String filePath) {
+        try {
+            Path path = Paths.get(RuleManagementSteps.class.getClassLoader().getResource(File.separator + filePath).toURI());
+            byte[] jsonDataLines = Files.readAllBytes(path);
+            String jsonText = new String(jsonDataLines);
+            JsonArray jsonData = new JsonParser().parse(jsonText).getAsJsonArray();
+
+            for (JsonElement jsonValue : jsonData) {
+                JsonObject obj = jsonValue.getAsJsonObject();
+                objects.put(obj.get("id").getAsInt(), obj);
+            }
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
     }

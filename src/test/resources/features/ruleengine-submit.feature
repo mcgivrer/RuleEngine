@@ -27,3 +27,13 @@ Feature: Feed the RuleEngine
     And The JsonObject identified by "1" has been processed by RuleEngine and the "tags" is "pediatric"
     And The JsonObject identified by "4" has been processed by RuleEngine and the "tags" is "pediatric"
     And The JsonObject identified by "5" has been processed by RuleEngine and the "tags" is "pediatric"
+
+  Scenario: Add a RuleProcessor with 2 rules and large data from a json file
+    Given the RuleEngine is up and running with maxPoolSize="4"
+    And I create a new RuleProcessor
+    And I add a RuleSet named "test-multi-rules"
+    And I add MyRule to the RuleSet "test-multi-rules"
+    And I add MySecondRule to the RuleSet "test-multi-rules"
+    And I create new JsonObject data from file "tests/ruleengine-data.json"
+    Then Submit the RuleProcessor to the RuleEngine with RuleSet "test-multi-rules"
+    And The JsonObject identified by "1,4,5" have been processed by RuleEngine and the "tags" contains "pediatric"
