@@ -5,8 +5,6 @@ import com.ge.healthcare.dose.services.ruleengine.Rule;
 import com.ge.healthcare.dose.services.ruleengine.RuleContext;
 import com.google.gson.JsonObject;
 
-import java.util.List;
-
 /**
  * A test Rule implemented only for test purpose.
  *

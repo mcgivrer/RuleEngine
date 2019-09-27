@@ -29,7 +29,7 @@ import static org.junit.Assert.assertEquals;
 @Slf4j
 public class RuleManagementSteps implements En {
 
-    Map<Integer, JsonObject> objects = new HashMap<>();
+    private Map<Integer, JsonObject> objects = new HashMap<>();
     private boolean unknownRuleSetExceptionRaised;
     private boolean unknownRuleExcpetionRaised;
     private RuleEngine re;
@@ -40,9 +40,6 @@ public class RuleManagementSteps implements En {
     private JsonObject jsonObject;
 
     private JsonDataOutputWriter jsonDataOutPutWriter;
-
-
-    static private int index = 0;
 
     public RuleManagementSteps() {
 
@@ -99,7 +96,7 @@ public class RuleManagementSteps implements En {
         });
         And("^I try to get an \"([^\"]*)\" Rule from the RuleSet \"([^\"]*)\"$", (String ruleName, String ruleSetName) -> {
             try {
-                Rule rf = rp.getRule(ruleSetName, ruleName);
+                Rule rule = rp.getRule(ruleSetName, ruleName);
             } catch (UnknownRuleException ure) {
                 unknownRuleExcpetionRaised = true;
             }
@@ -253,14 +250,6 @@ public class RuleManagementSteps implements En {
             re.addRuleProcessor(rp);
             Thread.sleep(250);
         } catch (NoMoreExecutorPoolSlotException | InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void waitFor(int delay) {
-        try {
-            Thread.sleep(delay);
-        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

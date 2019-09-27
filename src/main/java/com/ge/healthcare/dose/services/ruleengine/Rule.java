@@ -2,8 +2,6 @@ package com.ge.healthcare.dose.services.ruleengine;
 
 import com.google.gson.JsonObject;
 
-import java.util.List;
-
 /**
  * The Rule interface is the basic entity description to be managed by all the RuleProcessor process.
  * <p></p>It provides 2 main methods signatures :

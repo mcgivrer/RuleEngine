@@ -22,7 +22,7 @@ public class TagWithThresholdOnIntRule extends AbstractRule implements Rule {
     /**
      * Context Object to be retrieve to execute this rule
      */
-    JsonObject context;
+    private JsonObject context;
 
     /**
      * Create a new AbstractRule with a <code>name</code>

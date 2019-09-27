@@ -10,6 +10,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  *
  * @author Frédéric Delorme<frederic.delorme@gmail.com>
  */
+@Slf4j
 public class RuleEngine {
 
     /**
@@ -29,6 +30,7 @@ public class RuleEngine {
      */
     public RuleEngine(int maxThreadPoolSize) {
         pool = (ThreadPoolExecutor) Executors.newFixedThreadPool(maxThreadPoolSize);
+        log.debug("nw RuleEngine initialize with a pool of {} slots", maxThreadPoolSize);
     }
 
     /**
@@ -41,7 +43,9 @@ public class RuleEngine {
         if (!pool.isTerminating() || !pool.isTerminated() || !pool.isShutdown()) {
             rp.setDataWriter(dataWriter);
             pool.execute(rp);
+            log.debug("RuleProcessor Added to the thread pool");
         } else {
+            log.error("Unable to add the RuleProcessor to the thread pool, no more slot !");
             throw new NoMoreExecutorPoolSlotException();
         }
     }
