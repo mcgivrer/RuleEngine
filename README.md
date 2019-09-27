@@ -1,7 +1,6 @@
 # RuleEngine
 
 [![TravisCI](https://travis-ci.org/mcgivrer/RuleEngine.svg?branch=develop)](https://travis-ci.org/mcgivrer/RuleEngine "open the TravisCI compilation trend")
-[![buddy pipeline](https://app.buddy.works/mcgivrer/RuleEngine/pipelines/pipeline/148927/badge.svg?token=${project.buddy.token} "buddy pipeline")](https://app.buddy.works/mcgivrer/RuleEngine/pipelines/pipeline/${project.buddy.pipelineId})
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmcgivrer%2FRuleEngine.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmcgivrer%2FRuleEngine?ref=badge_shield)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/${project.codacity.token})](https://www.codacy.com/project/mcgivrer/RuleEngine/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mcgivrer/RuleEngine&amp;utm_campaign=Badge_Grade_Dashboard)
 [![Github Releases](https://img.shields.io/github/release/mcgivrer/RuleEngine.svg)](https://github.com/mcgivrer/RuleEngine/releases/tag/${project.version})
