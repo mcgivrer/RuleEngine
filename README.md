@@ -2,7 +2,7 @@
 
 [![TravisCI](https://travis-ci.org/mcgivrer/RuleEngine.svg?branch=develop)](https://travis-ci.org/mcgivrer/RuleEngine "open the TravisCI compilation trend")
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmcgivrer%2FRuleEngine.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmcgivrer%2FRuleEngine?ref=badge_shield)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/${project.codacity.token})](https://www.codacy.com/project/mcgivrer/RuleEngine/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mcgivrer/RuleEngine&amp;utm_campaign=Badge_Grade_Dashboard)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/cd3178efe577482d99439e943e88a0f6)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mcgivrer/RuleEngine&amp;utm_campaign=Badge_Grade)
 [![Github Releases](https://img.shields.io/github/release/mcgivrer/RuleEngine.svg)](https://github.com/mcgivrer/RuleEngine/releases/tag/${project.version})
 
 ## Description
