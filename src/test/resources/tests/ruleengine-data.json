@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "name": "myObject-1",
+    "age": 12,
+    "weight": 20,
+    "height": 150,
+    "date": "2018-09-13 12:00:00.00T000",
+    "status": "unknown"
+  },
+  {
+    "id": 2,
+    "name": "myObject-2",
+    "age": 35,
+    "weight": 70,
+    "height": 182,
+    "date": "2018-09-13 12:00:00.00T000",
+    "status": "unknown"
+  },
+  {
+    "id": 3,
+    "name": "myObject-3",
+    "age": 67,
+    "weight": 78,
+    "height": 167,
+    "date": "2018-09-13 12:00:00.00T000",
+    "status": "unknown"
+  },
+  {
+    "id": 4,
+    "name": "myObject-4",
+    "age": 17,
+    "weight": 66,
+    "height": 170,
+    "date": "2018-09-13 12:00:00.00T000",
+    "status": "unknown"
+  },
+  {
+    "id": 5,
+    "name": "myObject-5",
+    "age": 6,
+    "weight": 56,
+    "height": 170,
+    "date": "2018-09-13 12:00:00.00T000",
+    "status": "unknown"
+  }
+]
